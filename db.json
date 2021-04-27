@@ -1,0 +1,40 @@
+{
+    "profiles":[
+        {
+            "nombre":"John",
+            "id": 0,
+            "profesion":"Programador",
+            "edad":25,
+            "lenguajes":["PHP","Javascript","Dart"],
+            "disponibilidadParaViajar":true,
+            "rangoProfesional": {
+                "aniosDeExperiencia": 12,
+                "nivel": "Senior"
+            }
+        },
+        {
+            "nombre":"Doe",
+            "id": 1,
+            "profesion":"Programador",
+            "edad":20,
+            "lenguajes":["Python","Javascript","Flutter"],
+            "disponibilidadParaViajar":true,
+            "rangoProfesional": {
+                "aniosDeExperiencia": 12,
+                "nivel": "Senior"
+            }
+        },
+        {
+            "nombre":"Michael",
+            "id": 2,
+            "profesion":"Programador",
+            "edad":20,
+            "lenguajes":["PHP","Javascript","Java"],
+            "disponibilidadParaViajar":true,
+            "rangoProfesional": {
+                "aniosDeExperiencia": 2,
+                "nivel": "Junior"
+            }
+        }
+    ]
+}
