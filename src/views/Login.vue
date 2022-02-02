@@ -1,54 +1,100 @@
 <template>
-  <div class="login">
-    <h1 class="title">Login in the page</h1>
-    <form action class="form" @submit.prevent="login">
-      <label class="form-label" for="#email">Email:</label>
-      <input
-        v-model="email"
-        class="form-input"
-        type="email"
-        id="email"
-        required
-        placeholder="Email"
+  <b-container>
+    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+      <b-form-group
+        id="input-group-1"
+        label="Email address:"
+        label-for="input-1"
+        description="We'll never share your email with anyone else."
       >
-      <label class="form-label" for="#password">Password:</label>
-      <input
-        v-model="password"
-        class="form-input"
-        type="password"
-        id="password"
-        placeholder="Password"
-      >
-      <p v-if="error" class="error">Has introducido mal el email o la contraseña.</p>
-      <input class="form-submit" type="submit" value="Login">
-    </form>
-    <p class="msg">¿No tienes cuenta?
-      <router-link to="/register">Regístrate</router-link>
-    </p>
-  </div>
+        <b-form-input
+          id="input-1"
+          v-model="form.email"
+          type="email"
+          placeholder="Enter email"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="form.name"
+          placeholder="Enter name"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="input-group-3" label="Food:" label-for="input-3">
+        <b-form-select
+          id="input-3"
+          v-model="form.food"
+          :options="foods"
+          required
+        ></b-form-select>
+      </b-form-group>
+
+      <b-form-group id="input-group-4" v-slot="{ ariaDescribedby }">
+        <b-form-checkbox-group
+          v-model="form.checked"
+          id="checkboxes-4"
+          :aria-describedby="ariaDescribedby"
+        >
+          <b-form-checkbox value="me">Check me out</b-form-checkbox>
+          <b-form-checkbox value="that">Check that out</b-form-checkbox>
+        </b-form-checkbox-group>
+      </b-form-group>
+
+      <b-button type="submit" variant="primary">Submit</b-button>
+      <b-button type="reset" variant="danger">Reset</b-button>
+    </b-form>
+    <b-card class="mt-3" header="Form Data Result">
+      <pre class="m-0">{{ form }}</pre>
+    </b-card>
+  </b-container>
 </template>
 
 <script>
-import auth from "@/logic/auth";
 export default {
-  data: () => ({
-    email: "",
-    password: "",
-    error: false
-  }),
+  data() {
+    return {
+      form: {
+        email: "",
+        name: "",
+        food: null,
+        checked: [],
+      },
+      foods: [
+        { text: "Select One", value: null },
+        "Carrots",
+        "Beans",
+        "Tomatoes",
+        "Corn",
+      ],
+      show: true,
+    };
+  },
   methods: {
-    async login() {
-      try {
-        await auth.login(this.email, this.password);
-        this.$router.push("/");
-      } catch (error) {
-        this.error = true;
-      }
-    }
-  }
+    onSubmit(event) {
+      event.preventDefault();
+      alert(JSON.stringify(this.form));
+    },
+    onReset(event) {
+      event.preventDefault();
+      // Reset our form values
+      this.form.email = "";
+      this.form.name = "";
+      this.form.food = null;
+      this.form.checked = [];
+      // Trick to reset/clear native browser form validation state
+      this.show = false;
+      this.$nextTick(() => {
+        this.show = true;
+      });
+    },
+  },
 };
 </script>
 
 <style scoped>
-
 </style>
